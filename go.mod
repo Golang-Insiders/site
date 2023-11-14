@@ -1,5 +1,3 @@
-module encore.app
+module github.com/golang-insiders/site
 
-go 1.21.1
-
-require encore.dev v1.27.0 // indirect
+go 1.21.0
