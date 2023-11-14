@@ -1,3 +1,3 @@
 module github.com/golang-insiders/site
 
-go 1.21.0
+go 1.21
