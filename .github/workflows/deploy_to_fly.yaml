@@ -1,0 +1,24 @@
+name: Deploy to Fly.io
+
+on:
+  push:
+    branches: [ main ]  # Set this to the branch you want to deploy from
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Flyctl
+        run: |
+          curl -L https://fly.io/install.sh | sh
+          echo "$HOME/.fly/bin" >> $GITHUB_PATH
+
+
+      - name: Build and Push Docker Image
+        run: flyctl deploy --access_token ${{ secrets.FLY_API_TOKEN }} --app golang-insiders-com
+
+      - name: Check deployment status
+        run: flyctl status --app golang-insiders-com
