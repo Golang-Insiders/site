@@ -16,7 +16,6 @@ jobs:
           curl -L https://fly.io/install.sh | sh
           echo "$HOME/.fly/bin" >> $GITHUB_PATH
 
-
       - name: Build and Push Docker Image
         run: flyctl deploy --access_token ${{ secrets.FLY_API_TOKEN }} --app golang-insiders-com
 
