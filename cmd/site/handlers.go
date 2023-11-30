@@ -25,7 +25,7 @@ func (app *application) handleTalkForm(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	templateData := newTemplateData()
-	templateData.TimeZones = data.LoadTimeZones("")
+	templateData.TimeZones = app.services.TimeZone.LoadTimeZones("")
 	app.tmpl.render(w, "new-talk", templateData)
 }
 
