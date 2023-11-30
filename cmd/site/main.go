@@ -3,13 +3,43 @@ package main
 import (
 	"log"
 	"net/http"
+
+	"github.com/golang-insiders/site/internal/data"
 )
 
+type application struct {
+	cfg      config
+	tmpl     Templates
+	services data.Services
+}
+
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./public/index.html")
-	})
-	if err := http.ListenAndServe(":3000", nil); err != nil {
+	cfg, err := loadConfig()
+	if err != nil {
+		log.Fatal("Couldn't load env variables")
+	}
+
+	db, err := data.OpenDB(cfg.db)
+	if err != nil {
+		log.Fatal("Couldn't open db", err)
+	}
+	defer db.Close()
+
+	services := data.NewServices(db)
+
+	app := application{
+		tmpl:     newTemplate(),
+		cfg:      cfg,
+		services: services,
+	}
+
+	http.HandleFunc("/", app.handleHome)
+	http.HandleFunc("/talk", app.handleGetTalkByID)
+	http.HandleFunc("/submit-form", app.handleTalkPost)
+	http.HandleFunc("/submit-form/new", app.handleTalkForm)
+
+	log.Printf("Starting server on %s", cfg.port)
+	if err := http.ListenAndServe(cfg.port, nil); err != nil {
 		log.Fatal("failed to serve home page.")
 	}
 }
