@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  db: 
+    image: postgres 
+    container_name: db
+    restart: always 
+    environment: 
+      POSTGRES_USER: ${PSQL_USER}
+      POSTGRES_PASSWORD: ${PSQL_PASSWORD}
+      POSTGRES_DB: ${PSQL_DATABASE}
+    ports:
+      - 5432:5432
+    networks:
+      - main
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # web:
+  #   build:
+  #     context: ./
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   volumes:
+  #     - .env:/.env
+  #   ports:
+  #     - 3000:3000
+  #   networks:
+  #     - main
+
+networks:
+  main:
+
+volumes:
+  postgres_data:
