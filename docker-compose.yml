@@ -16,18 +16,6 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  # web:
-  #   build:
-  #     context: ./
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   volumes:
-  #     - .env:/.env
-  #   ports:
-  #     - 3000:3000
-  #   networks:
-  #     - main
-
 networks:
   main:
 

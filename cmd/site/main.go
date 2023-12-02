@@ -16,7 +16,7 @@ type application struct {
 func main() {
 	cfg, err := loadConfig()
 	if err != nil {
-		log.Fatal("Couldn't load env variables")
+		log.Fatal("Couldn't load config")
 	}
 
 	db, err := data.OpenDB(cfg.db)
@@ -25,7 +25,10 @@ func main() {
 	}
 	defer db.Close()
 
-	services := data.NewServices(db)
+	services, err := data.NewServices(db)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	app := application{
 		tmpl:     newTemplate(),

@@ -3,6 +3,7 @@ package data
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 )
 
 var (
@@ -14,9 +15,12 @@ type Services struct {
 	TimeZone TimeZoneService
 }
 
-func NewServices(db *sql.DB) Services {
+func NewServices(db *sql.DB) (Services, error) {
+	if db == nil {
+		return Services{}, fmt.Errorf("DB does not exist")
+	}
 	return Services{
 		Talks:    TalkService{DB: db},
 		TimeZone: TimeZoneService{},
-	}
+	}, nil
 }
