@@ -11,7 +11,7 @@ type TimeZoneService struct {
 }
 
 // Shameless copy from stack overflow https://stackoverflow.com/questions/40120056/get-a-list-of-valid-time-zones-in-go
-func (tz *TimeZoneService) LoadTimeZones(path string) []string {
+func (tz TimeZoneService) LoadTimeZones(path string) []string {
 	var timeZones []string
 	zoneDir := "/usr/share/zoneinfo/"
 	files, _ := os.ReadDir(zoneDir + path)
