@@ -52,13 +52,13 @@ func (app *application) handleTalkPost(w http.ResponseWriter, r *http.Request) {
 		Timezone:        tz,
 	}
 
-	ok, msg := talk.ValidateTalk()
-	if !ok {
-		fmt.Fprintf(w, "%s", msg)
+	err := types.ValidateTalk(talk)
+	if err != nil {
+		fmt.Fprintf(w, "%s", err.Error())
 		return
 	}
 
-	err := app.services.Talks.Insert(ctx, &talk)
+	err = app.services.Talks.Insert(ctx, &talk)
 	if err != nil {
 		log.Println("Error inserting data", err)
 		w.WriteHeader(http.StatusInternalServerError)
