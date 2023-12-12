@@ -1,0 +1,29 @@
+{{ block "talk-id" . }}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title></title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width-device-width, initial-scale=1">
+	</head>
+	<body>
+
+		<nav>
+			<a href="/">Home</a>
+			<a href="/submit-form/new">New talk</a>
+
+		</nav>
+		{{with .Talk}}
+		<h1>
+			Talk {{.ID}}
+		</h1>
+		<ul>
+			<li>{{.TwitterUsername}}</li>
+			<li>{{.Title}}</li>
+			<li>{{.Summary}}</li>
+			<li>{{.Timezone}}</li>
+		</ul>
+		{{end}}
+	</body>
+</html>
+{{end}}

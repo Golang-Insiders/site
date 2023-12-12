@@ -1,1 +1,3 @@
 /.encore
+tmp/
+.env

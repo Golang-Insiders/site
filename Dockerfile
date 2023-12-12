@@ -10,14 +10,13 @@ COPY go.mod  ./
 RUN go mod download
 
 # Copy the source code into the container
-COPY cmd/ ./cmd/
-COPY public/ ./public/
+COPY . .
 
 # Build the application
-RUN go build -o /myapp cmd/site/main.go
+RUN go build -o /site ./cmd/site/
 
 # Expose port 3000
 EXPOSE 3000
 
 # Run the binary program
-CMD ["/myapp"]
+CMD ["/site"]

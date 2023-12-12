@@ -1,0 +1,56 @@
+{{ block "new-talk" . }}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title></title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width-device-width, initial-scale=1">
+	</head>
+	<body>
+		<nav>
+			<a href="/">Home</a>
+		</nav>
+		<h1>
+			Submit a new talk
+		</h1>
+		<ul>
+		{{if .Errors}}
+			{{range .Errors}}
+				<li>
+					{{.}}
+				</li>
+			{{end}}
+		{{end}}
+		</ul>
+		<form action="/submit-form" method="POST">
+			<label for="twitter-username">Twitter Username</label>
+			<input type="text" id="twitter-username" name="twitter-username" required/>
+
+			<br><br>
+
+			<label for="title">Title</label>
+			<input type="text" id="title" name="title" required/>
+
+			<br><br>
+
+			<label for="summary">Summary</label>
+			<textarea id="summary" name="summary" required></textarea>
+
+			<br><br>
+
+			<label for="time-zone">Time Zone</label>
+			<select id="time-zone" name="time-zone" required>
+				{{range .TimeZones}}
+	        <option value="{{ . }}">{{ . }}</option>
+				{{end}}
+	    </select>
+
+			<br><br>
+			<button type="submit">
+				Submit Talk
+			</button>
+		</form>
+	</body>
+</html>
+{{end}}
+
