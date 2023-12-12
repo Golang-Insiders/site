@@ -54,7 +54,11 @@ func (app *application) handleTalkPost(w http.ResponseWriter, r *http.Request) {
 
 	err := types.ValidateTalk(talk)
 	if err != nil {
-		fmt.Fprintf(w, "%s", err.Error())
+		templateData := newTemplateData()
+		templateData.TimeZones = app.services.TimeZone.LoadTimeZones("")
+		templateData.Errors = append(templateData.Errors, err.Error())
+
+		app.tmpl.render(w, "new-talk", templateData)
 		return
 	}
 

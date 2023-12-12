@@ -13,6 +13,11 @@
 		<h1>
 			Submit a new talk
 		</h1>
+		{{if .Errors}}
+			{{range .Errors}}
+				{{.}}
+			{{end}}
+		{{end}}
 		<form action="/submit-form" method="POST">
 			<label for="twitter-username">Twitter Username</label>
 			<input type="text" id="twitter-username" name="twitter-username" required/>
@@ -25,7 +30,7 @@
 			<br><br>
 
 			<label for="summary">Summary</label>
-			<textarea id="summary" name="summary"></textarea required>
+			<textarea id="summary" name="summary" required></textarea>
 
 			<br><br>
 
