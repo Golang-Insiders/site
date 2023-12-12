@@ -28,18 +28,19 @@ type Talk struct {
 	CreatedAt       time.Time
 }
 
-func ValidateTalk(t Talk) error {
+func ValidateTalk(t Talk) []error {
+	var errors []error
 	if t.TwitterUsername == INVALID_TWITTER_USER {
-		return ErrTwitterUsernameDNE
+		errors = append(errors, ErrTwitterUsernameDNE)
 	}
 	if len(t.Title) < MAX_TITLE_LEN {
-		return ErrTitleLength
+		errors = append(errors, ErrTitleLength)
 	}
 	if len(t.Summary) < MAX_SUMMARY_LEN {
-		return ErrSummaryLength
+		errors = append(errors, ErrSummaryLength)
 	}
 	if t.Timezone == "" {
-		return ErrTimeZone
+		errors = append(errors, ErrTimeZone)
 	}
-	return nil
+	return errors
 }

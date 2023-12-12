@@ -52,17 +52,19 @@ func (app *application) handleTalkPost(w http.ResponseWriter, r *http.Request) {
 		Timezone:        tz,
 	}
 
-	err := types.ValidateTalk(talk)
-	if err != nil {
+	errs := types.ValidateTalk(talk)
+	if errs != nil {
 		templateData := newTemplateData()
 		templateData.TimeZones = app.services.TimeZone.LoadTimeZones("")
-		templateData.Errors = append(templateData.Errors, err.Error())
+		for _, e := range errs {
+			templateData.Errors = append(templateData.Errors, e.Error())
+		}
 
 		app.tmpl.render(w, "new-talk", templateData)
 		return
 	}
 
-	err = app.services.Talks.Insert(ctx, &talk)
+	err := app.services.Talks.Insert(ctx, &talk)
 	if err != nil {
 		log.Println("Error inserting data", err)
 		w.WriteHeader(http.StatusInternalServerError)

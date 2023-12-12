@@ -1,6 +1,7 @@
 package types
 
 import (
+	"slices"
 	"strings"
 	"testing"
 )
@@ -32,7 +33,8 @@ func TestValidateTalk(t *testing.T) {
 	if err == nil {
 		t.Error("expected an error: ", err)
 	}
-	if err != ErrTwitterUsernameDNE {
+	// if err != ErrTwitterUsernameDNE {
+	if !slices.Contains(err, ErrTwitterUsernameDNE) {
 		t.Error("expected twitter username error: ", err)
 	}
 
@@ -46,7 +48,8 @@ func TestValidateTalk(t *testing.T) {
 	if err == nil {
 		t.Error("expected an error: ", err)
 	}
-	if err != ErrTitleLength {
+	// if err != ErrTitleLength {
+	if !slices.Contains(err, ErrTitleLength) {
 		t.Error("expected title length error: ", err)
 	}
 
@@ -60,7 +63,8 @@ func TestValidateTalk(t *testing.T) {
 	if err == nil {
 		t.Error("expected an error: ", err)
 	}
-	if err != ErrSummaryLength {
+	// if err != ErrSummaryLength {
+	if !slices.Contains(err, ErrSummaryLength) {
 		t.Error("expected summary length error: ", err)
 	}
 

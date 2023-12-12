@@ -13,11 +13,15 @@
 		<h1>
 			Submit a new talk
 		</h1>
+		<ul>
 		{{if .Errors}}
 			{{range .Errors}}
-				{{.}}
+				<li>
+					{{.}}
+				</li>
 			{{end}}
 		{{end}}
+		</ul>
 		<form action="/submit-form" method="POST">
 			<label for="twitter-username">Twitter Username</label>
 			<input type="text" id="twitter-username" name="twitter-username" required/>
