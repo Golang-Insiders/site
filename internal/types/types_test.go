@@ -5,25 +5,13 @@ import (
 	"testing"
 )
 
-// Generated a string of the provided length
-func generateString(length int) string {
-	if length <= 0 {
-		return ""
-	}
-
-	pattern := "abc"
-	result := strings.Repeat(pattern, (length/len(pattern))+1)[:length]
-
-	return result
-}
-
 var (
 	ValidTwitterUsername   = "valid-twitter-username"
 	InvalidTwitterUsername = "dne"
-	ValidTitle             = generateString(30)
-	InvalidTitle           = generateString(29)
-	ValidSummary           = generateString(300)
-	InvalidSummary         = generateString(299)
+	ValidTitle             = strings.Repeat("a", 30)
+	InvalidTitle           = strings.Repeat("a", 29)
+	ValidSummary           = strings.Repeat("a", 300)
+	InvalidSummary         = strings.Repeat("a", 299)
 )
 
 func TestValidateTalk(t *testing.T) {
@@ -44,10 +32,8 @@ func TestValidateTalk(t *testing.T) {
 	if err == nil {
 		t.Error("expected an error: ", err)
 	}
-	if err != nil {
-		if err != ErrTwitterUsernameDNE {
-			t.Error("expected twitter username error: ", err)
-		}
+	if err != ErrTwitterUsernameDNE {
+		t.Error("expected twitter username error: ", err)
 	}
 
 	// Test invalid title check
@@ -60,10 +46,8 @@ func TestValidateTalk(t *testing.T) {
 	if err == nil {
 		t.Error("expected an error: ", err)
 	}
-	if err != nil {
-		if err != ErrTitleLength {
-			t.Error("expected title length error: ", err)
-		}
+	if err != ErrTitleLength {
+		t.Error("expected title length error: ", err)
 	}
 
 	// Test invalid summary check
@@ -76,10 +60,8 @@ func TestValidateTalk(t *testing.T) {
 	if err == nil {
 		t.Error("expected an error: ", err)
 	}
-	if err != nil {
-		if err != ErrSummaryLength {
-			t.Error("expected summary length error: ", err)
-		}
+	if err != ErrSummaryLength {
+		t.Error("expected summary length error: ", err)
 	}
 
 	// Test valid talk check
